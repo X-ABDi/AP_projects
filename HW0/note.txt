@@ -1,0 +1,14 @@
+cin.ignore();
+lineStream = stringstream();
+lineStream.str();
+
+using iterator for the second loop to keep track of the vector even when the main loop restarts
+
+// personal access token
+// still uncomfortable with branches, checkout and local or remote branches
+
+strangly I declared a vector in a function out of main, filled it and pushed it to a vector of vectors, it just didn't 
+    disapear or disrtuct after quiting the function. why?
+
+when using for (i : vector) I cann't use i.end() with operator == or != . why? --> problem solved by using .back(),
+    actually make sense
