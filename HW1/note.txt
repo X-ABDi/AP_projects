@@ -1,0 +1,10 @@
+I used while (stringstream) and it seems that if only one string remains the loop will repeat 
+    it self twice. don't know why.--> because there is still \n in the stream and refrence 
+    returned is not yet null.
+
+getline() returns the number of caracters that are read. including \n, excluding \0.
+
+intresting fact : in a for loop with i = 5 , i used getline(cin , line). the input file ends before the
+    loop terminates, but line remains the same, i thought getline would assign line to an empty string but
+    it just ignored the function at th end of cin.
+
