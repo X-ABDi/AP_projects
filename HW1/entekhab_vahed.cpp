@@ -36,12 +36,6 @@ int main()
     getInput(presented_courses, taken_courses, requests);
     response = processInput(presented_courses, taken_courses, requests);
     monitorOutput(response);
-    // DEBUG
-    int i{0};int vec_size = requests.size();
-    // for (i = 0; i < vec_size; i++)
-    // {
-    //     cout << requests[i] << endl;
-    // }
     free(presented_courses, taken_courses, requests);
     return 0;
 }
@@ -56,7 +50,6 @@ void fillingPresentedCrs(vector<presented_course *> &presented_courses)
     stringstream line_stream;
 
     cin >> pres_crs_num;
-    // cout << pres_crs_num << endl;
     cin.ignore();
     for (i = 0; i < pres_crs_num; i++)
     {
@@ -86,7 +79,6 @@ void fillingTakenCrs(vector<taken_course *> &taken_courses)
     stringstream line_stream;
 
     cin >> taken_crs_num;
-    // cout << taken_crs_num << endl;
     cin.ignore();
     for (i = 0; i < taken_crs_num; i++)
     {
