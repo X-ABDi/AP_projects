@@ -7,10 +7,11 @@ using namespace std;
 
 struct input
 {
-    int line;
     string name;
+    int line;
     int father_line;
     int children_count;
+    int depth;
 };
 
 int getInput(vector<input *> &data);
@@ -24,8 +25,21 @@ int main()
     vector<input *> data;
     int depth{getInput(data)};
     cout << "before process data" << endl;
+    // for (int i = 0; i < data.size(); i++)
+    // {
+    //     cout << data[i]->line << endl;
+    // }
     processData(data);
     cout << "after process data" << endl;
+    // for (int i = 0; i < data.size(); i++)
+    // {
+    //     cout << data[i]->children_count << endl;
+    // }
+    cout << endl;
+    // for (int i = 0; i < data.size(); i++)
+    // {
+    //     cout << data[i]->depth << endl;
+    // }
     int index{0};
     printDirectory(data, depth, index);
     free(data);
@@ -62,7 +76,7 @@ void processData(vector<input *> &data)
     cout << "inside process data" << endl;
     for (int i = 0; i < data.size(); i++)
     {
-        for (int j = i+1; j < data.size(); j++)
+        for (int j = i + 1; j < data.size(); j++)
         {
             if (data[i]->line == data[j]->father_line)
             {
@@ -70,48 +84,78 @@ void processData(vector<input *> &data)
             }
         }
     }
+
+    for (int i = 0; i < data.size(); i++)
+    {
+        if (data[i]->line == 1)
+        {
+            // cout << "if" << endl;
+            // cout << i << " " << data[i]->line << " ";
+            data[i]->depth == 1;
+            // cout << data[i]->depth << endl;
+        }
+        else
+        {
+            for (int j = 0; j < i; j++)
+            {
+                if (data[i]->father_line == data[j]->line)
+                {
+                    // cout << "else" << endl;
+                    // cout << i << " " << data[i]->line << " ";
+                    data[i]->depth = data[j]->depth + 1;
+                    // cout << data[i]->depth << endl;
+                }
+            }
+        }
+    }
 }
 
 void printSubLine(vector<input *> &data, int index, int sub_index)
 {
-
-    if (sub_index == data[index]->father_line)
+    // cout << "print subline" << endl;
+    // cout << "\n sub_index: " << sub_index << "  data[index]->depth: " << data[index]->depth << endl;
+    if (sub_index == data[index]->depth)
     {
-        // cout << "when sub line should return" << endl;
         cout << "|__";
         return;
     }
     else
     {
-        // cout << "in every sub line else" << endl;
-        if (data[sub_index]->children_count != 0)
+        // cout << "print subline in else section" << endl;
+        if (data[sub_index]->children_count > 0)
         {
-            cout << "|  ";
-            data[sub_index]->children_count--;
+            // cout << "children count: " << data[sub_index]->children_count << endl;
+            cout << "|  " ;
         }
         else
         {
             cout << "   ";
         }
-        // cout << "sub_index: " << sub_index << endl;
-        printSubLine(data, index, sub_index+1);
+        printSubLine(data, index, sub_index + 1);
     }
 }
 
 void printDirectory(vector<input *> &data, int depth, int index)
 {
+    // cout << "print directory" << endl;
     if (index == data.size())
     {
-        // cout << "last return in print directory" << endl;
         return;
     }
     else
     {
-        // cout << "in print directory. index: " << index << "and before sub line" << endl;
+        // cout << "print directory in else section" << endl;
         int sub_index{0};
         printSubLine(data, index, sub_index);
         cout << data[index]->name << endl;
-        printDirectory(data, depth, index+1);
+        for (int i = 0; i < data.size(); i++)
+        {
+            if (data[index]->father_line == data[i]->line)
+            {
+                data[i]->children_count--;
+            }
+        }
+        printDirectory(data, depth, index + 1);
     }
 }
 
