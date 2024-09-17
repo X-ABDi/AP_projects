@@ -2,7 +2,7 @@ about git :
     if you want to over write local files with the latest version of remote repo 
     you should first " fetch --all " , this command downloads all files without 
     any merge or rebase. then " reset --hard " to change all files.
-    if you wanna keep commits you can create a new branchthen checkout to the main 
+    if you wanna keep commits you can create a new branch then checkout to the main 
     then do the reset thing.
 
 still conflicts with iterators when the vector stores pointers. unable to access 

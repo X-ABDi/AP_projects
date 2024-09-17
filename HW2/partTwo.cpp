@@ -26,18 +26,6 @@ int main()
 
     processData(data);
 
-    // DEBUG
-    // for (int i = 0; i < data.size(); i++)
-    // {
-    //     cout << "children count: " << data[i]->children_count << "  father line: " << data[i]->father_line << endl;
-    // }
-    // cout << endl;
-    // for (int i = 0; i < data.size(); i++)
-    // {
-    //     cout << data[i]->depth << endl;
-    // }
-    // DEBUG
-
     int index{0};
     printDirectory(data, depth, index);
     free(data);
@@ -165,7 +153,6 @@ void printDirectory(vector<input *> &data, int standard_depth, int index)
             if (data[index]->father_line == data[i]->line && data[i]->children_count > 0)
             {
                 data[i]->children_count = data[i]->children_count - 1;
-                // break;
             }
         cout << "|__" << data[index]->name << endl;
         }
