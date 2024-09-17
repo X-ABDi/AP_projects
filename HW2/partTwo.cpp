@@ -104,54 +104,48 @@ void processData(vector<input *> &data)
 
 void printLine(vector<input *> &data, int index, int sub_index, int standard_depth)
 {
-    int depth;
-    if ((sub_index >= index && index != 0))
+    if (data[index]->depth > standard_depth)
     {
-        // cout << "sub_index >= index,, index != 0" << endl;
         return;
     }
-    if (sub_index == index - 1)
+    if (sub_index == index)
     {
-        // cout << "sub_index == index - 1" << endl;
+        cout << "|__" << data[index]->name << endl;
         return;
     }
-    
-    // if (data[sub_index]->depth == 1)
-    // {
-    //     cout << "data[sub_index]->depth == 1" << endl;
-    //     return;
-    // }
-    else if (data[sub_index]->depth >= standard_depth || data[sub_index]->depth > data[index]->depth)
+    else 
     {
-        printLine(data, index, sub_index + 1, standard_depth);
-    }
-    else
-    {
-        depth = data[sub_index]->depth;
-        while (depth == data[sub_index + 1]->depth && sub_index < index) // && data[sub_index]->children_count == 0
+        while (data[sub_index]->depth == data[sub_index + 1]->depth)
         {
-            ++sub_index;
+            sub_index = sub_index + 1;
+            if (sub_index == index) 
+            {
+                cout << "|__" << data[index]->name << endl;
+                return;
+            }
         }
-        // printLine(data, index, sub_index, standard_depth);
-        if (sub_index == index || sub_index == index - 1) // depth == data[sub_index]->depth &&
+
+        if (data[sub_index]->depth == 1)
         {
+            cout << "   ";
+        }
+
+        if (data[sub_index]->depth == data[index]->depth - 1)
+        {
+            cout << "|__" << data[index]->name << endl;
             return;
         }
-        else if (depth != data[sub_index + 1]->depth && sub_index < index && data[sub_index]->children_count > 0)
+
+        if (data[sub_index]->children_count != 0)
         {
             cout << "|  ";
             printLine(data, index, sub_index + 1, standard_depth);
         }
-        else if (depth != data[sub_index + 1]->depth && sub_index < index && data[sub_index]->children_count == 0)
+        else if (data[sub_index]->children_count == 0)
         {
             cout << "   ";
             printLine(data, index, sub_index + 1, standard_depth);
         }
-        // else if (depth != data[sub_index + 1]->depth && sub_index == index)
-        // {
-        //     cout << "   ";
-        //     return;
-        // }
     }
 }
 
@@ -163,31 +157,19 @@ void printDirectory(vector<input *> &data, int standard_depth, int index)
     }
     else
     {
-        if (data[index]->depth >= standard_depth)
+        int sub_index{0};
+        printLine(data, index, sub_index, standard_depth);
+
+        for (int i = 0; i < index; i++)
         {
-            printDirectory(data, standard_depth, index + 1);
-        }
-        else
-        {
-            int sub_index{0};
-        // cout << data[index]->depth << endl;
-            if (data[index]->depth != 1)
+            if (data[index]->father_line == data[i]->line && data[i]->children_count > 0)
             {
-                cout << "   ";
-                sub_index = sub_index + 1;
+                data[i]->children_count = data[i]->children_count - 1;
+                // break;
             }
-            printLine(data, index, sub_index, standard_depth);
-            cout << "|__" << data[index]->name << endl;
-            for (int i = 0; i < index; i++)
-            {
-                if (data[index]->father_line == data[i]->line && data[i]->children_count > 0)
-                {
-                    data[i]->children_count = data[i]->children_count - 1;
-                    break;
-                }
-            }
-            printDirectory(data, standard_depth, index + 1);
+        cout << "|__" << data[index]->name << endl;
         }
+        printDirectory(data, standard_depth, index + 1);
     }
 }
 
