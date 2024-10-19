@@ -8,3 +8,4 @@ intresting fact : in a for loop with i = 5 , i used getline(cin , line). the inp
     loop terminates, but line remains the same, i thought getline would assign line to an empty string but
     it just ignored the function at th end of cin.
 
+https://www.fosslinux.com/115031/troubleshoot-boot-problems-by-reinstalling-grub-on-linux.htm
